@@ -9,6 +9,8 @@ app.get("/birds", (req, res) => {
 
 app.get("/birds/:birdType", (req, res) => {
     res.send({birds: req.params.birdType})
+
 });
 
 app.listen(8080);
+//git
