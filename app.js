@@ -12,9 +12,9 @@ app.get("/birds", (req, res) => {
     res.send(birds);
 });
 
-app.get("/birds/:birdType", (req, res) => {
-    res.send({birds: req.params.birdType})
-
+app.get("/birds/:id", (req, res) => {
+    let birdToFind = birds.find(bird => bird.id === Number(req.params.id)); 
+    res.send(birds[birds.indexOf(birdToFind)]);
 });
 
 app.post("/birds", (req, res) => {
@@ -34,8 +34,8 @@ app.patch("/birds/:id", (req, res) => {
 });
 
 app.delete("/birds/:id", (req, res) => {
-    let birdToPatch = birds.find(bird => bird.id === Number(req.params.id)); 
-    let birdIndex = birds.indexOf(birdToPatch);
+    let birdtoDelete = birds.find(bird => bird.id === Number(req.params.id)); 
+    let birdIndex = birds.indexOf(birdtoDelete);
     birds.splice(birdIndex, 1);
     res.send(birds);
 });
