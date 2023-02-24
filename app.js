@@ -14,7 +14,12 @@ app.get("/birds", (req, res) => {
 
 app.get("/birds/:id", (req, res) => {
     let birdToFind = birds.find(bird => bird.id === Number(req.params.id)); 
-    res.send(birds[birds.indexOf(birdToFind)]);
+    if(birds[birds.indexOf] === -1){
+        res.status(404).send( {data: birds[birds.indexOf], message: `Bird not found${req.params.id}`});
+    }else{
+        res.send(birds[birds.indexOf(birdToFind)]);
+    }
+    
 });
 
 app.post("/birds", (req, res) => {
@@ -26,10 +31,17 @@ app.post("/birds", (req, res) => {
 });
 
 app.patch("/birds/:id", (req, res) => {
-    let birdToPatch = birds.find(bird => bird.id === Number(req.params.id)); 
-    let birdIndex = birds.indexOf(birdToPatch);
-    birds[birdIndex].name = req.body.name;
-    res.send(birds);
+    let birdIndex = birds.indexOf(bird => bird.id === Number(req.params.id)); 
+    if(birdIndex === -1){
+        res.status(404).send({message: `Bird not found${req.params.id}`});
+    }else{
+        const foundBird = birds[birdIndex];
+        const updatedBird = {...birdIndex, ...req.body, id: foundBird.id};
+        birds[birdIndex] = updatedBird;
+        res.send(birds);
+    }
+
+    
 
 });
 
